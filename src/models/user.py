@@ -13,7 +13,7 @@ class User(db.Model):
     updated_at = db.Column(db.DateTime, server_default=db.func.now(), onupdate=db.func.now())
     is_active = db.Column(db.Boolean, default=True)
 
-    role = db.relationship('Role', backref=db.backref('users', lazy=True))
+    role = db.relationship('Role', backref=db.backref('users', lazy=True), lazy=False)
 
     def __repr__(self):
         return '<User %r>' % self.email
@@ -23,3 +23,9 @@ class User(db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password, password)
+
+    def serialize(self):
+        return {
+            'email': self.email,
+            'name': self.name
+        }
