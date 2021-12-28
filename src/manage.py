@@ -7,7 +7,6 @@ from flask_jwt_extended import JWTManager
 from src.config import config_dict, FLASK_ENV
 from src.database import initialize_db
 from src.routes import initialize_routes
-from .hello import Hello
 
 def create_app(flask_env=FLASK_ENV):
     app = Flask(__name__)
