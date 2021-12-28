@@ -18,10 +18,10 @@ class UserResource(AdminResource):
         return user
 
     def put(self, id):
-        data = request.form
+        data = request.json
         user_service = UserService()
 
-        return user_service.update_user(id, name=data.get('name'))
+        return user_service.update_user(id, name=data.get('name'), is_active=bool(data.get('is_active')))
 
     def delete(self, id):
         user_service = UserService()

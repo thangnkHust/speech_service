@@ -74,13 +74,27 @@ class UserService:
 
         return user.serialize()
 
-    def update_user(self, id, name):
+    def update_user(self, id, name, is_active=True):
         user = self.user_dao.get_by_id(id=id)
 
         if not user:
             return {
                 'msg': 'Account not found!!!'
             }, 404
+        return self.user_dao.update_user(id=id, name=name, is_active=is_active)
+
+    def update_profile(self, id, name):
+        user = self.user_dao.get_by_id(id=id)
+
+        if not user:
+            return {
+                'msg': 'Account not found!!!'
+            }, 404
+
+        if not user.is_active:
+            return {
+                'msg': 'Account has been blocked!!!'
+            }, 400
 
         return self.user_dao.update_user(id=id, name=name)
 

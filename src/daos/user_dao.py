@@ -55,11 +55,12 @@ class UserDAO:
         finally:
             session.close()
 
-    def update_user(self, id, name):
+    def update_user(self, id, name, is_active=True):
         try:
             session = db.session
             user = session.query(self.model).filter_by(id=id).first()
             user.name = name
+            user.is_active = is_active
             session.commit()
             return user.serialize()
 

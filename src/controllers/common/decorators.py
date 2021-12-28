@@ -23,9 +23,12 @@ def user_required():
         def decorator(*args, **kwargs):
             verify_jwt_in_request(fresh=True)
             claims = get_jwt()
+            user_data = {
+                'user_id': claims['sub'],
+            }
             if claims['admin']:
                 return {'msg': 'Permission denied'}, 403
-            return fn(*args, **kwargs)
+            return fn(user_data, *args, **kwargs)
 
         return decorator
 
