@@ -11,6 +11,7 @@ else:
 class Config():
     APP_ROOTDIR = os.path.abspath(os.path.dirname(__file__))
     JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY', 'secret key')
+    BUNDLE_ERRORS = True
     DB_USERNAME = os.getenv('DB_USERNAME', 'missing_db_username')
     DB_PASSWORD = os.getenv('DB_PASSWORD', 'missing_db_password')
     DB_HOST = os.getenv('DB_HOST', 'missing_db_host')
@@ -36,6 +37,7 @@ class Config():
 class DevelopmentConfig(Config):
     DEBUG = True
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    AUDIO_SAMPLE_FOLDER = '.docker/data/audio_sample'
 
 class TestingConfig(Config):
     DEBUG = True

@@ -20,7 +20,19 @@ class SpeakerDAO:
     def get_by_user_id(self, user_id):
         try:
             session = db.session
-            speaker = session.query(self.model).filter_by(user_id=user_id)
+            speakers = session.query(self.model).filter_by(user_id=user_id)
+
+            return speakers
+        except Exception as e:
+            session.rollback()
+            raise e
+        finally:
+            session.close()
+
+    def get_by_name(self, user_id, name):
+        try:
+            session = db.session
+            speaker = session.query(self.model).filter_by(name=name, user_id=user_id).first()
 
             return speaker
         except Exception as e:

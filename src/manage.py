@@ -16,6 +16,9 @@ def create_app(flask_env=FLASK_ENV):
     app.config.from_object(config_dict[flask_env])
     app.app_context().push()
 
+    if not os.path.exists(app.config['AUDIO_SAMPLE_FOLDER']):
+        os.makedirs(app.config['AUDIO_SAMPLE_FOLDER'])
+
     # Init database
     initialize_db(app)
 

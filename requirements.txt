@@ -1,5 +1,5 @@
 Flask==1.1.2
-uWSGI==2.0.18
+# uWSGI==2.0.18
 Flask-Cors==3.0.8
 Flask-Script==2.0.6
 Flask-Migrate==2.5.3
@@ -8,4 +8,11 @@ Flask-SQLAlchemy==2.5.1
 flask-jwt-extended
 flask-bcrypt
 psycopg2-binary==2.9.2
-Tensorflow==2.2.0
+# Tensorflow==2.2.0
+nanoid==2.0.0
+numpy
+scipy
+pandas
+keras==2.4.3
+librosa
+# pyaudio
