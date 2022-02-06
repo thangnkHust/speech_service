@@ -1,0 +1,19 @@
+[Admin] Get list user
+---
+tags:
+  - Admin
+responses:
+  200:
+    description: Get list user successfully
+    schema:
+      type: array
+      items:
+        $ref: '#definitions/User'
+  400:
+    description: Fails to bad request data
+
+  401:
+    description: Unauthorized
+
+security:
+  - BearerAdmin: []

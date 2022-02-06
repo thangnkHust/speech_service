@@ -1,0 +1,27 @@
+Get all speaker of login user
+---
+tags:
+  - Speaker
+responses:
+  200:
+    description: Get all speaker of login user successfully
+    schema:
+      type: array
+      items:
+        $ref: '#/definitions/Speaker'
+  401:
+    description: Unauthorized
+
+definitions:
+  Speaker:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      name:
+        type: string
+        example: speaker
+
+security:
+  - BearerUser: []

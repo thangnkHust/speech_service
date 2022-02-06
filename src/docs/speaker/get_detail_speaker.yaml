@@ -1,0 +1,25 @@
+Get details speaker
+---
+tags:
+  - Speaker
+
+parameters:
+  - name: speaker_name
+    in: path
+    required: true
+    type: string
+    schema:
+      example: speaker
+
+responses:
+  200:
+    description: Create speaker successfully
+    schema:
+      $ref: '#/definitions/Speaker'
+  404:
+    description: Speaker does not exist under the logged in account
+  401:
+    description: Unauthorized
+
+security:
+  - BearerUser: []

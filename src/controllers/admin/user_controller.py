@@ -1,9 +1,11 @@
 from flask_restful import Resource
 from flask import request
+from flasgger import swag_from
 from src.services import UserService
 from ..common.base_controller import AdminResource
 
 class UserListResource(AdminResource):
+    @swag_from('../../docs/admin/get_list_user.yaml')
     def get(self):
         user_service = UserService()
         users = user_service.get_all_user()
@@ -11,6 +13,7 @@ class UserListResource(AdminResource):
         return users
 
 class UserResource(AdminResource):
+    @swag_from('../../docs/admin/get_detail_user.yaml')
     def get(self, id):
         user_service = UserService()
         user = user_service.get_by_id(id)

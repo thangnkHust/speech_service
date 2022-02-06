@@ -38,6 +38,10 @@ class DevelopmentConfig(Config):
     DEBUG = True
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     AUDIO_SAMPLE_FOLDER = '.docker/data/audio_sample'
+    SWAGGER = {
+        'title': "Speech Searvice API",
+        'uiversion': 3
+    }
 
 class TestingConfig(Config):
     DEBUG = True

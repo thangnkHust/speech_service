@@ -1,0 +1,32 @@
+Get all audio of speaker
+---
+tags:
+  - Audio Sample
+responses:
+  200:
+    description: Get all speaker of login user successfully
+    schema:
+      type: array
+      items:
+        $ref: '#/definitions/AudioSample'
+  401:
+    description: Unauthorized
+  404:
+    description: Not found speaker
+
+definitions:
+  AudioSample:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      name:
+        type: string
+        example: audio sample
+      path:
+        type: string
+        example: path/to/audio_sample
+
+security:
+  - BearerUser: []

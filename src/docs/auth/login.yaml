@@ -1,0 +1,33 @@
+User log in
+---
+tags:
+  - Authentication
+parameters:
+  - name: email
+    in: formData
+    required: true
+    type: string
+    schema:
+      example: user@gmail.com
+
+  - name: password
+    in: formData
+    required: true
+    type: string
+    schema:
+      example: '********'
+
+responses:
+  200:
+    description: When a user successfully logs in
+    schema:
+      type: object
+      properties:
+        token:
+          type: string
+          example: token
+  400:
+    description: Fails to login due to bad request data
+
+  401:
+    description: A user supplies incorrect credentials

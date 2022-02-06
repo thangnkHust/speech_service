@@ -1,0 +1,24 @@
+[Admin] Get detail an user
+---
+tags:
+  - Admin
+parameters:
+  - name: id
+    in: path
+    required: true
+    type: integer
+    schema:
+      example: 1
+
+responses:
+  200:
+    description: Get detail user successfully
+    schema:
+      $ref: '#definitions/User'
+  404:
+    description: Account not found
+  401:
+    description: Unauthorized
+
+security:
+  - BearerAdmin: []

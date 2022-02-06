@@ -1,0 +1,28 @@
+Speaker Identification
+---
+tags:
+  - Speaker
+
+parameters:
+  - name: audio_file
+    in: formData
+    required: true
+    type: file
+
+responses:
+  200:
+    description: Create speaker successfully
+    schema:
+      type: object
+      properties:
+        speaker:
+          $ref: '#/definitions/Speaker'
+        confidences:
+          type: number
+          format: float
+          example: 0.9
+  401:
+    description: Unauthorized
+
+security:
+  - BearerUser: []

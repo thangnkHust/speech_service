@@ -1,14 +1,17 @@
 from flask_restful import reqparse
 import werkzeug
+from flasgger import swag_from
 from ..common.base_controller import BaseResource
 from src.services import SpeakerService
 
 class SpeakerListResource(BaseResource):
+    @swag_from('../../docs/speaker/get_speaker_user.yaml')
     def get(self, user_data):
         speaker_service = SpeakerService()
 
         return speaker_service.get_speaker_of_user(user_id=user_data['user_id'])
 
+    @swag_from('../../docs/speaker/create_speaker.yaml')
     def post(self, user_data):
         speaker_service = SpeakerService()
         parser = reqparse.RequestParser(trim=True)
@@ -19,12 +22,14 @@ class SpeakerListResource(BaseResource):
 
 
 class SpeakerRessource(BaseResource):
+    @swag_from('../../docs/speaker/get_detail_speaker.yaml')
     def get(self, user_data, speaker_name):
         speaker_service = SpeakerService()
 
         return speaker_service.get_detail_speaker(user_id=user_data['user_id'], speaker_name=speaker_name)
 
 class AudioListResource(BaseResource):
+    @swag_from('../../docs/audio_sample/get_audio_speaker.yaml')
     def get(self, user_data, speaker_name):
         speaker_service = SpeakerService()
 
@@ -39,6 +44,7 @@ class AudioListResource(BaseResource):
         return speaker_service.create_audio_of_speaker(user_id=user_data['user_id'], speaker_name=speaker_name, audio_file=args.audio_file)
 
 class SpeakerIdentificationResource(BaseResource):
+    @swag_from('../../docs/speaker/speaker_identification.yaml')
     def post(self, user_data):
         speaker_service = SpeakerService()
         parser = reqparse.RequestParser()

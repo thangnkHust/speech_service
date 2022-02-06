@@ -57,12 +57,13 @@ class SpeakerService:
 
     def create_audio_of_speaker(self, user_id, speaker_name, audio_file):
         speaker = self.check_valid_speaker(user_id=user_id, speaker_name=speaker_name)
-        folder_path = os.path.join(current_app.config['AUDIO_SAMPLE_FOLDER'], str(speaker.id))
 
         if not speaker:
             return {
                 'message': 'Not found speaker!!!'
             }, 404
+
+        folder_path = os.path.join(current_app.config['AUDIO_SAMPLE_FOLDER'], str(speaker.id))
 
         if not os.path.exists(folder_path):
             os.makedirs(folder_path)

@@ -4,9 +4,11 @@ from flask_restful import Api
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager
+from flasgger import Swagger
 from src.config import config_dict, FLASK_ENV
 from src.database import initialize_db
 from src.routes import initialize_routes
+from src.swagger import template, swagger_config
 
 def create_app(flask_env=FLASK_ENV):
     app = Flask(__name__)
@@ -24,6 +26,8 @@ def create_app(flask_env=FLASK_ENV):
 
     Bcrypt(app)
     JWTManager(app)
+
+    Swagger(app, config=swagger_config, template=template)
 
     # Init router
     api = Api(app)

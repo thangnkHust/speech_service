@@ -1,0 +1,29 @@
+User register, just role admin
+---
+tags:
+  - Authentication
+parameters:
+  - name: email
+    in: formData
+    required: true
+    type: string
+    schema:
+      example: user@gmail.com
+
+  - name: password
+    in: formData
+    required: true
+    type: string
+    schema:
+      example: '********'
+responses:
+  201:
+    description: When a user successfully register
+
+  409:
+    description: Account already exists
+
+  401:
+    description: Unauthorized
+security:
+  - BearerAdmin: []

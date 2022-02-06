@@ -16,3 +16,4 @@ pandas
 keras==2.4.3
 librosa
 # pyaudio
+flasgger

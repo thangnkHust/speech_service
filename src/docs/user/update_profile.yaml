@@ -1,0 +1,26 @@
+Update profile of user
+---
+tags:
+  - User
+
+parameters:
+  - name: name
+    in: formData
+    required: true
+    type: string
+    schema:
+      example: user
+
+responses:
+  200:
+    description: Update profile successfully
+    schema:
+      $ref: '#definitions/User'
+  400:
+    description: Fails to bad request data
+
+  401:
+    description: Unauthorized
+
+security:
+  - BearerUser: []

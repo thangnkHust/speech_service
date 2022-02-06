@@ -1,0 +1,26 @@
+Get details profile of user
+---
+tags:
+  - User
+responses:
+  200:
+    description: Get details profile successfully
+    schema:
+      $ref: '#definitions/User'
+  400:
+    description: Fails to bad request data
+
+  401:
+    description: A user supplies incorrect credentials
+definitions:
+  User:
+    type: object
+    properties:
+      email:
+        type: email
+        example: user@gmail.com
+      name:
+        type: string
+        example: user
+security:
+  - BearerUser: []

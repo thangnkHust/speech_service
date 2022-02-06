@@ -1,0 +1,23 @@
+Create a new speaker
+---
+tags:
+  - Speaker
+
+parameters:
+  - name: name
+    in: formData
+    required: true
+    type: string
+    schema:
+      example: speaker
+
+responses:
+  201:
+    description: Create speaker successfully
+  401:
+    description: Unauthorized
+  500:
+    description: Server internal error
+
+security:
+  - BearerUser: []
