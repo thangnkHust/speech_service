@@ -1,3 +1,4 @@
+import imp
 import os
 from flask import Flask
 from flask_restful import Api
@@ -5,10 +6,13 @@ from flask_cors import CORS
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager
 from flasgger import Swagger
+
 from src.config import config_dict, FLASK_ENV
 from src.database import initialize_db
 from src.routes import initialize_routes
 from src.swagger import template, swagger_config
+from app_celery import celery
+from task.celery_utils import init_celery
 
 def create_app(flask_env=FLASK_ENV):
     app = Flask(__name__)
@@ -23,6 +27,9 @@ def create_app(flask_env=FLASK_ENV):
 
     # Init database
     initialize_db(app)
+
+    # Init celery
+    init_celery(app, celery)
 
     Bcrypt(app)
     JWTManager(app)

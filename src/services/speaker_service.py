@@ -1,5 +1,5 @@
 import os
-from flask import current_app
+from flask import current_app, jsonify
 from nanoid import generate
 from src.daos import UserDAO, SpeakerDAO, AudioSampleDAO
 from src.utils.speaker_identification import get_feature_data, get_speaker_result
@@ -37,6 +37,23 @@ class SpeakerService:
             }, 404
 
         return speaker.serialize()
+
+    def delete_speaker(self, user_id, speaker_name):
+        speaker = self.speaker_dao.get_by_name(user_id=user_id, name=speaker_name)
+
+        if not speaker:
+            return {
+                'message': 'Bad request!!!'
+            }, 400
+
+        if self.speaker_dao.delete_speaker(speaker=speaker):
+            return {
+                'message': 'Delete speaker successfully'
+            }, 200
+
+        return {
+            'message': 'Server Internal Error!!!'
+        }, 500
 
     def check_valid_speaker(self, user_id, speaker_name):
         return self.speaker_dao.get_by_name(user_id=user_id, name=speaker_name)
@@ -107,16 +124,21 @@ class SpeakerService:
         # get speaker
         correct_speaker, confidence = get_speaker_result(enroll_list, feature_test)
         if not correct_speaker:
-            return {
+            response = jsonify({
                 'message': 'Internal error!!!'
-            }, 500
+            })
+            response.status_code = 500
 
         if confidence < 0.6:
-            return {
+            response = jsonify({
                 'message': 'The server cannot identify the speaker'
-            }, 400
+            })
+            response.status_code = 400
 
-        return {
+        response = jsonify({
             'speaker': correct_speaker.serialize(),
             'confidences': confidence
-        }
+        })
+        response.status_code = 200
+
+        return response

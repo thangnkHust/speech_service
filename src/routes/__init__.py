@@ -1,6 +1,6 @@
 from src.controllers.auth_controller import LoginResource, RegisterResource
 from src.controllers.admin import UserListResource, UserResource
-from src.controllers.user import ProfileResource, SpeakerListResource, SpeakerRessource, \
+from src.controllers.user import ProfileResource, SpeakerListResource, SpeakerResource, \
     AudioListResource, SpeakerIdentificationResource
 
 def initialize_routes(api):
@@ -15,6 +15,6 @@ def initialize_routes(api):
     # user
     api.add_resource(ProfileResource, '/api/profile')
     api.add_resource(SpeakerListResource, '/api/speakers')
-    api.add_resource(SpeakerRessource, '/api/speakers/<string:speaker_name>')
+    api.add_resource(SpeakerResource, '/api/speakers/<string:speaker_name>')
     api.add_resource(AudioListResource, '/api/speakers/<string:speaker_name>/audios')
     api.add_resource(SpeakerIdentificationResource, '/api/speaker-identification')

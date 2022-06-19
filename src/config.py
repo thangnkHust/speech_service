@@ -24,15 +24,10 @@ class Config():
         DB_PORT,
         DB_NAME
     )
-    # MONGODB_SETTINGS = {
-    #     'host': 'mongodb://{}:{}@{}:{}/{}'.format(
-    #         DB_USERNAME,
-    #         DB_PASSWORD,
-    #         DB_HOST,
-    #         DB_PORT,
-    #         DB_NAME
-    #     )
-    # }
+    CELERY_CONFIG = {
+        'broker_url': os.getenv('RABBIT_URL', 'missing_broker_url'),
+        'result_backend': os.getenv('REDIS_URL', 'missing_redis_url')
+    }
 
 class DevelopmentConfig(Config):
     DEBUG = True

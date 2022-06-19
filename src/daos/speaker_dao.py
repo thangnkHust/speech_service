@@ -53,3 +53,15 @@ class SpeakerDAO:
             raise e
         finally:
             session.close()
+
+    def delete_speaker(self, speaker):
+        try:
+            session = db.session
+            session.delete(speaker)
+            session.commit()
+            return True
+        except Exception as e:
+            session.rollback()
+            raise e
+        finally:
+            session.close()

@@ -1,2 +1,2 @@
 from .user_controller import ProfileResource
-from .speaker_controller import SpeakerListResource, SpeakerRessource, AudioListResource, SpeakerIdentificationResource
+from .speaker_controller import SpeakerListResource, SpeakerResource, AudioListResource, SpeakerIdentificationResource
