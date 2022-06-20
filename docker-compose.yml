@@ -48,7 +48,8 @@ services:
     restart: unless-stopped
     env_file:
       - .env
-    command: celery -A task.run_celery:celery worker --loglevel INFO
+    command: watchmedo auto-restart --directory=./ --pattern="*.py" --recursive -- celery -A task.run_celery:celery worker --loglevel INFO
+    # command: celery -A task.run_celery:celery worker --loglevel INFO
     links:
       - rabbitmq
       - redis

@@ -5,7 +5,7 @@ from flasgger import swag_from
 
 from ..common.base_controller import BaseResource
 from src.services import SpeakerService
-from task.workers import create_task
+from task.workers import create_task, get_job
 
 class SpeakerListResource(BaseResource):
     @swag_from('../../docs/speaker/get_speaker_user.yaml')
@@ -61,11 +61,4 @@ class SpeakerIdentificationResource(BaseResource):
         # res = jsonify({'file': args.audio_file.mimetype})
         # res.status_code = 201
 
-        task = create_task.delay()
-        res = jsonify({
-            'task_id': task.id
-        })
-        res.status_code = 202
-        return res
-
-        # return speaker_service.speaker_identification(user_id=user_data['user_id'], audio_test=args.audio_file)
+        return speaker_service.speaker_identification(user_id=user_data['user_id'], audio_test=args.audio_file)
