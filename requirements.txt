@@ -18,3 +18,4 @@ librosa
 # pyaudio
 flasgger
 celery[redis]
+flower==1.0.0
