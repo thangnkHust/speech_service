@@ -1,2 +1,3 @@
 from .user_controller import ProfileResource
 from .speaker_controller import SpeakerListResource, SpeakerResource, AudioListResource, SpeakerIdentificationResource
+from .record_controller import RecordListResource, RecordProcessingResource

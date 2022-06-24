@@ -11,4 +11,8 @@ result_backend = 'redis://redis:6379/0'
 accept_content = ['json', 'application/text']
 
 result_serializer = 'json'
-timezone = "UTC"
+timezone = "Asia/Ho_Chi_Minh"
+
+# worker_concurrency = 6
+# worker_pool = "eventlet"
+worker_autoscaler = True

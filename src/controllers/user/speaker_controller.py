@@ -5,7 +5,6 @@ from flasgger import swag_from
 
 from ..common.base_controller import BaseResource
 from src.services import SpeakerService
-from task.workers import create_task, get_job
 
 class SpeakerListResource(BaseResource):
     @swag_from('../../docs/speaker/get_speaker_user.yaml')
