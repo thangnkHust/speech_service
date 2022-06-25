@@ -26,14 +26,12 @@ services:
   rabbitmq:
     image: rabbitmq:3.8-management-alpine
     restart: always
-    environment:
-      RABBITMQ_DEFAULT_USER: root
-      RABBITMQ_DEFAULT_PASS: root
     ports:
       - "15672:15672"
     volumes:
       - .docker/data/rabbitmq/data/:/var/lib/rabbitmq/
       - .docker/data/rabbitmq/log/:/var/log/rabbitmq/
+      - .docker/my_rabbit.conf:/etc/rabbitmq/rabbitmq.conf
 
   redis:
     image: redis:6-alpine
@@ -48,7 +46,7 @@ services:
     restart: unless-stopped
     env_file:
       - .env
-    command: watchmedo auto-restart --directory=./ --pattern="*.py" --recursive -- celery -A task.run_celery:celery worker --loglevel INFO
+    command: watchmedo auto-restart --directory=./ --pattern="*.py" --recursive -- celery -A task.run_celery:celery worker --loglevel INFO --autoscale 10,1
     # command: celery -A task.run_celery:celery worker --loglevel INFO
     links:
       - rabbitmq

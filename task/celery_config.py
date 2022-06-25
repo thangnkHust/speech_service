@@ -15,4 +15,9 @@ timezone = "Asia/Ho_Chi_Minh"
 
 # worker_concurrency = 6
 # worker_pool = "eventlet"
-worker_autoscaler = True
+# Worker có thể restart pool
+worker_pool_restarts = True
+# Khi xảy ra lỗi (như worker break) thì message sẽ được lưu trữ lại trong message queue
+task_acks_late = True
+# khi message được chạy lại thì status sẽ update thành STARTED
+task_track_started = True

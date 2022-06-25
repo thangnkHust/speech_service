@@ -9,9 +9,10 @@ def get_status(task_id):
 @celery.task(autoretry_for=(Exception,), retry_kwargs={'max_retries': 3, 'countdown': 5}, track_started=True)
 def speech_recognition(record_path: str):
     try:
-        time.sleep(30)
+        time.sleep(31*60)
         # Call core Speech recognition
         # Lay ket qua luu DB, export file .json
+        # raise ValueError()
 
         return {
             'message': 'result.json'
