@@ -4,3 +4,5 @@
 .env
 .idea
 **/.DS_Store
+src/utils/speaker_identification/models
+src/utils/speech_to_text/pretrain915_finetune2

@@ -1,4 +1,3 @@
-from flask_restful import Resource
 from flask import request
 from flasgger import swag_from
 from src.services import UserService
@@ -30,3 +29,9 @@ class UserResource(AdminResource):
         user_service = UserService()
 
         return user_service.delete_user(id=id)
+
+class UserActiveResource(AdminResource):
+    def post(self, id):
+        user_service = UserService()
+
+        return user_service.change_active(id=id)

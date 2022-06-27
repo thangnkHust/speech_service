@@ -8,7 +8,7 @@ class SpeakerDAO:
     def get_all(self):
         try:
             session = db.session
-            speaker = session.query(self.model).all()
+            speaker = session.query(self.model).order_by(Speaker.user_id).all()
 
             return speaker
         except Exception as e:
@@ -33,6 +33,18 @@ class SpeakerDAO:
         try:
             session = db.session
             speaker = session.query(self.model).filter_by(name=name, user_id=user_id).first()
+
+            return speaker
+        except Exception as e:
+            session.rollback()
+            raise e
+        finally:
+            session.close()
+
+    def get_by_id(self, id: int) -> Speaker:
+        try:
+            session = db.session
+            speaker = session.query(self.model).filter_by(id=id).first()
 
             return speaker
         except Exception as e:

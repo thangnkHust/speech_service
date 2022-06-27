@@ -10,7 +10,7 @@ class RecordDAO:
     def get_all(self) -> List[Record]:
         try:
             session = db.session
-            records = session.query(self.model).all()
+            records = session.query(self.model).order_by(Record.user_id).all()
 
             return records
         except Exception as e:

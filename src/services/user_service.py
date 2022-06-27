@@ -1,6 +1,8 @@
+from email import message
 from flask import jsonify
 import datetime
 from flask_jwt_extended import create_access_token
+import os
 from src.daos import RoleDAO
 from src.daos import UserDAO
 
@@ -26,7 +28,7 @@ class UserService:
 
     def seed_user(self):
         role = self.role_dao.get_by_type('admin')
-        self.user_dao.create_user(id=1, email='admin@gmail.com', password='12345678', name='admin', role=role)
+        self.user_dao.create_user(email=os.getenv('EMAIL_ADMIN', 'admin@gmail.com'), password=os.getenv('PASSWORD_ADMIN', '12345678'), name='admin', role=role)
         print('Seeder user admin successfully!!!')
 
     def get_all_role(self):
@@ -35,32 +37,71 @@ class UserService:
 
         return roles, 200
 
+
     def get_all_user(self):
         users = self.user_dao.get_all()
-        users = [user.serialize() for user in users]
+        users_formatted = []
 
-        return users, 200
+        for user in users:
+            user_formatted = user.serialize()
+            user_formatted['role'] = user.role.role_type
+            users_formatted.append(user_formatted)
+
+        res = jsonify(users_formatted)
+        res.status_code = 200
+
+        return res
+
+
+    def change_active(self, id: int):
+        user = self.user_dao.get_by_id(id=id)
+        if not user:
+            res = jsonify({
+                'message': 'User not found!'
+            })
+            res.status_code = 404
+        else:
+            if self.user_dao.change_active(id=id):
+                res = jsonify({
+                    'message': 'Change active successfully'
+                })
+                res.status_code = 200
+            else:
+                res = jsonify({
+                    'message': 'Server Internal Error!!!'
+                })
+                res.status_code = 500
+
+        return res
+
 
     def login(self, email, password):
         user = self.user_dao.get_by_email(email)
+        if not user:
+            return {'message': 'Unauthorized'}, 401
+
         auth = user.check_password(password)
         if not auth:
             return {'message': 'Unauthorized'}, 401
 
-        print(user.role.id)
         expires = datetime.timedelta(days=10)
         claims = {'admin': user.role.role_type == 'admin'}
         access_token = create_access_token(identity=str(user.id), additional_claims=claims, fresh=True, expires_delta=expires)
-        return {'token': access_token}, 200
+        res = jsonify({
+            'token': access_token,
+            'admin': user.role.role_type == 'admin'
+        })
+        res.status_code = 200
+        return res
 
-    def register(self, email, password):
+    def register(self, email, password, name):
         user = self.user_dao.get_by_email(email)
 
         if user:
             return {'msg': 'Account already exists!!!'}, 409
 
         role = self.role_dao.get_by_type('user')
-        self.user_dao.create_user(email=email, password=password, role=role)
+        self.user_dao.create_user(email=email, password=password, name=name, role=role)
 
         return {'msg': 'Register successfully!!!'}, 201
 
@@ -110,7 +151,7 @@ class UserService:
         if status:
             return {
                 'msg': 'Delete successfully!!!'
-            }
+            }, 200
         return {
             'msg': 'Internal Error!!!'
-        }
+        }, 500

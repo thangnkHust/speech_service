@@ -79,3 +79,9 @@ class RecordService:
             raise e
         finally:
             return res
+
+
+    def get_all_record(self):
+        records = self.record_dao.get_all()
+
+        return [r.serialize() for r in records]

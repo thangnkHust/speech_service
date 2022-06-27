@@ -33,6 +33,7 @@ class RegisterResource(AdminResource):
         parser = reqparse.RequestParser()
         parser.add_argument('email', type=str, required=True, case_sensitive=False, trim=True)
         parser.add_argument('password', type=str, required=True, case_sensitive=False)
+        parser.add_argument('name', type=str, required=True, case_sensitive=False, trim=True)
         args = parser.parse_args()
 
-        return user_service.register(args.email, args.password)
+        return user_service.register(args.email, args.password, args.name)
