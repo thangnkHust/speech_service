@@ -6,14 +6,11 @@ from flasgger import swag_from
 from src.services import UserService
 from .common.decorators import admin_required
 from .common.base_controller import AdminResource
+from src.utils.check_connection import check_connection
 
 class LoginResource(Resource):
-    @admin_required()
     def get(self):
-        user_service = UserService()
-        roles = user_service.get_all_role()
-
-        return roles
+        return check_connection()
 
     @swag_from('../docs/auth/login.yaml')
     def post(self):
