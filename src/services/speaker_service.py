@@ -230,10 +230,13 @@ class SpeakerService:
         if not audio:
             return {'message': 'Audio sample not found!!!'}, 404
 
+        # with open(audio.path, 'rb') as f:
+        #     content = f.read()
+        # return content
         return send_file(
                 f"/app/{audio.path}",
-                mimetype="audio/wav"
-                # as_attachment=True,
+                mimetype="audio/wav",
+                as_attachment=True,
                 # attachment_filename="test.wav"
             )
 

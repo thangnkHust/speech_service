@@ -5,6 +5,11 @@ from src.controllers.user import ProfileResource, SpeakerListResource, SpeakerRe
     AudioListResource, SpeakerIdentificationResource, RecordListResource, RecordProcessingResource
 
 def initialize_routes(api):
+    """Initial router
+
+    Args:
+        api (Api): Import from flask_restful
+    """
     # auth
     api.add_resource(LoginResource, '/api/auth/login')
     api.add_resource(RegisterResource, '/api/auth/register')

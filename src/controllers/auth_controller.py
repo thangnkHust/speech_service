@@ -1,10 +1,7 @@
 from flask_restful import Resource
-from flask import request
 from flask_restful import reqparse
-from flask_jwt_extended import jwt_required
 from flasgger import swag_from
 from src.services import UserService
-from .common.decorators import admin_required
 from .common.base_controller import AdminResource
 from src.utils.check_connection import check_connection
 
