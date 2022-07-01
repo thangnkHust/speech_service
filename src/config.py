@@ -34,6 +34,7 @@ class DevelopmentConfig(Config):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     AUDIO_SAMPLE_FOLDER = '.docker/data/audio_sample'
     RECORD_FOLDER = '.docker/data/record'
+    RESULT_FOLDER = '.docker/data/result'
     SWAGGER = {
         'title': "Speech Searvice API",
         'uiversion': 3

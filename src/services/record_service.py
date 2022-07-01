@@ -1,3 +1,4 @@
+import json
 import os
 from flask import current_app, jsonify
 from nanoid import generate
@@ -53,7 +54,7 @@ class RecordService:
             task = get_status(task_id=record_id)
 
             if task.status == states.PENDING or task.status == states.FAILURE or task.status == states.REVOKED:
-                speech_recognition.apply_async((record.record_path,), task_id=record_id)
+                speech_recognition.apply_async((record.record_path, user_id, record_id), task_id=record_id)
                 self.record_dao.update_record(record_id=record_id, user_id=user_id, status=STARTED)
 
             res = jsonify({
@@ -80,6 +81,21 @@ class RecordService:
         finally:
             return res
 
+    def get_full_transcript(self, user_id: int, record_id: str):
+        record = self.record_dao.get_by_record_id(record_id=record_id, user_id=user_id)
+        if not record:
+            res = jsonify({
+                'message': 'Record not found!!!'
+            })
+            res.status_code = 404
+        if not record.result_path:
+            return None, 200
+        try:
+            with open(record.result_path, 'r') as f:
+                result_data = json.load(f)
+            return result_data
+        except Exception as e:
+            raise e
 
     def get_all_record(self):
         records = self.record_dao.get_all()

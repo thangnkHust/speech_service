@@ -20,15 +20,16 @@ class RecordListResource(BaseResource):
         return record_service.upload_record(user_id=user_data['user_id'], record_file=args['record_file'])
 
 class RecordProcessingResource(BaseResource):
-    def get(self):
-        return check_connection()
     # def get(self):
-    #     parser = reqparse.RequestParser(trim=True)
-    #     parser.add_argument('task_id', type=str, required=True, location='args')
-    #     args = parser.parse_args()
-    #     record_service = RecordService()
+    #     return check_connection()
+    def get(self, user_data):
+        parser = reqparse.RequestParser(trim=True)
+        parser.add_argument('task_id', type=str, required=True, location='args')
+        args = parser.parse_args()
+        record_service = RecordService()
 
-    #     return record_service.get_processing_info(args['task_id'])
+        return record_service.get_processing_info(task_id=args['task_id'])
+
 
     def post(self, user_data):
         parser = reqparse.RequestParser(trim=True)
@@ -37,3 +38,12 @@ class RecordProcessingResource(BaseResource):
         record_service = RecordService()
 
         return record_service.request_processing(user_id=user_data['user_id'], record_id=args['record_id'])
+
+class RecordTranscriptResource(BaseResource):
+    def get(self, user_data):
+        parser = reqparse.RequestParser(trim=True)
+        parser.add_argument('record_id', type=str, required=True, location='args')
+        args = parser.parse_args()
+        record_service = RecordService()
+
+        return record_service.get_full_transcript(user_id=user_data['user_id'], record_id=args['record_id'])
