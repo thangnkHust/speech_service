@@ -12,6 +12,14 @@ class RecordListResource(BaseResource):
         return check_connection()
 
     def post(self, user_data):
+        """Upload record
+
+        Args:
+            user_data (dict): contain user_id get by token
+
+        Returns:
+            Status Upload
+        """
         parser = reqparse.RequestParser()
         parser.add_argument('record_file', type=werkzeug.datastructures.FileStorage, required=True, location='files')
         args = parser.parse_args()

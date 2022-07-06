@@ -10,7 +10,9 @@ class RecordDAO:
     def get_all(self) -> List[Record]:
         try:
             session = db.session
-            records = session.query(self.model).order_by(Record.user_id).all()
+            records = session.query(self.model).join(User).filter(
+                User.is_active==True
+            ).order_by(Record.user_id).all()
 
             return records
         except Exception as e:
@@ -35,7 +37,7 @@ class RecordDAO:
             session.close()
 
 
-    def get_by_record_id(self, record_id: int, user_id: int) -> Record:
+    def get_by_record_id(self, record_id: str, user_id: int) -> Record:
         try:
             session = db.session
             record = session.query(self.model).filter_by(id=record_id, user_id=user_id).first()
@@ -57,6 +59,31 @@ class RecordDAO:
             session.commit()
 
             return record.serialize()
+        except Exception as e:
+            session.rollback()
+            raise e
+        finally:
+            session.close()
+
+    def delete_record(self, record: Record) -> bool:
+        try:
+            session = db.session
+            session.delete(record)
+            session.commit()
+
+            return record.serialize()
+        except Exception as e:
+            session.rollback()
+            raise e
+        finally:
+            session.close()
+
+    def get_by_id(self, record_id: str) -> Record:
+        try:
+            session = db.session
+            record = session.query(self.model).filter_by(id=record_id).first()
+
+            return record
         except Exception as e:
             session.rollback()
             raise e

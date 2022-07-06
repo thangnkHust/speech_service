@@ -4,9 +4,9 @@ services:
   app:
     # build:
     #   context: .
-    #   dockerfile: "Dockerfile"
+    #   dockerfile: "Dockerfile.cloud"
     # container_name: speech-service_app
-    image: speech-service_app:conda
+    image: asr:1.0
     volumes:
       - ./:/app
     restart: unless-stopped
@@ -40,7 +40,7 @@ services:
     #   - .docker/data/redis:/data
 
   worker:
-    image: speech-service_app:conda
+    image: asr:1.0
     volumes:
       - ./:/app
     restart: unless-stopped
@@ -77,7 +77,7 @@ services:
       - .docker/data/db:/var/lib/postgresql/data
 
   flower:
-    image: speech-service_app:conda
+    image: asr:1.0
     volumes:
       - ./:/app
     restart: unless-stopped

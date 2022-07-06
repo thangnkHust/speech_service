@@ -20,6 +20,7 @@ class Record(db.Model):
     def serialize(self):
         return {
             'id': self.id,
+            'user': self.user.serialize(),
             'record_path': self.record_path,
             'result_path': self.result_path,
             'status': self.status
