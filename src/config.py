@@ -10,8 +10,11 @@ else:
 
 class Config():
     APP_ROOTDIR = os.path.abspath(os.path.dirname(__file__))
+    # Config jwt key
     JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY', 'secret key')
+    # return only one error validate field (form request)
     BUNDLE_ERRORS = True
+    # Config DB
     DB_USERNAME = os.getenv('DB_USERNAME', 'missing_db_username')
     DB_PASSWORD = os.getenv('DB_PASSWORD', 'missing_db_password')
     DB_HOST = os.getenv('DB_HOST', 'missing_db_host')
@@ -24,14 +27,7 @@ class Config():
         DB_PORT,
         DB_NAME
     )
-    CELERY_CONFIG = {
-        'broker_url': os.getenv('RABBIT_URL', 'missing_broker_url'),
-        'result_backend': os.getenv('REDIS_URL', 'missing_redis_url')
-    }
-
-class DevelopmentConfig(Config):
-    DEBUG = True
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    # Config data folder
     AUDIO_SAMPLE_FOLDER = '.docker/data/audio_sample'
     RECORD_FOLDER = '.docker/data/record'
     RESULT_FOLDER = '.docker/data/result'
@@ -39,12 +35,25 @@ class DevelopmentConfig(Config):
         'title': "Speech Searvice API",
         'uiversion': 3
     }
+    # Config for celery queue management
+    CELERY_CONFIG = {
+        'broker_url': os.getenv('RABBIT_URL', 'missing_broker_url'),
+        'result_backend': os.getenv('REDIS_URL', 'missing_redis_url')
+    }
+
+class DevelopmentConfig(Config):
+    ENV = 'development'
+    DEBUG = True
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 class TestingConfig(Config):
+    FLASK_APP = 'app_flask'
+    ENV = 'development'
     DEBUG = True
     TESTING = True
 
 class ProductionConfig(Config):
+    ENV = 'production'
     DEBUG = False
     TESTING = False
 

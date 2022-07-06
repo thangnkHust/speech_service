@@ -10,7 +10,7 @@ services:
     volumes:
       - ./:/app
     restart: unless-stopped
-    command: python3 app_flask.py runserver
+    command: python3 app_flask.py
     env_file:
       - .env
     expose:
@@ -46,8 +46,8 @@ services:
     restart: unless-stopped
     env_file:
       - .env
-    command: watchmedo auto-restart --directory=./ --pattern="*.py" --recursive -- celery -A task.run_celery:celery worker --loglevel INFO --autoscale 10,1
-    # command: celery -A task.run_celery:celery worker --loglevel INFO
+    # command: watchmedo auto-restart --directory=./ --pattern="*.py" --recursive -- celery -A task.run_celery:celery worker --loglevel INFO --autoscale 10,1
+    command: celery -A task.run_celery:celery worker --loglevel INFO --autoscale 10,1
     links:
       - rabbitmq
       - redis
