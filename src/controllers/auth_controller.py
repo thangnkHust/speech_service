@@ -13,8 +13,8 @@ class LoginResource(Resource):
     def post(self):
         user_service = UserService()
         parser = reqparse.RequestParser()
-        parser.add_argument('email', type=str, required=True, case_sensitive=False, trim=True)
-        parser.add_argument('password', type=str, required=True, case_sensitive=False)
+        parser.add_argument('email', type=str, required=True, trim=True, location=['form', 'json'])
+        parser.add_argument('password', type=str, required=True, location=['form', 'json'])
         args = parser.parse_args()
 
         return user_service.login(args.email, args.password)
@@ -25,9 +25,9 @@ class RegisterResource(AdminResource):
     def post(self):
         user_service = UserService()
         parser = reqparse.RequestParser()
-        parser.add_argument('email', type=str, required=True, case_sensitive=False, trim=True)
-        parser.add_argument('password', type=str, required=True, case_sensitive=False)
-        parser.add_argument('name', type=str, required=True, case_sensitive=False, trim=True)
+        parser.add_argument('email', type=str, required=True, case_sensitive=False, trim=True, location=['form', 'json'])
+        parser.add_argument('password', type=str, required=True, case_sensitive=False, location=['form', 'json'])
+        parser.add_argument('name', type=str, required=True, case_sensitive=False, trim=True, location=['form', 'json'])
         args = parser.parse_args()
 
         return user_service.register(args.email, args.password, args.name)
