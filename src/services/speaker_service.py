@@ -2,7 +2,7 @@ import os
 from flask import current_app, jsonify, send_file
 from nanoid import generate
 from src.daos import UserDAO, SpeakerDAO, AudioSampleDAO
-from src.utils.speaker_identification import get_feature_data, get_speaker_result
+from src.core.speaker_identification import get_feature_data, get_speaker_result
 
 class SpeakerService:
     def __init__(self) -> None:
@@ -94,6 +94,7 @@ class SpeakerService:
             path_save = os.path.join(folder_path, filename_random)
             # save file to server
             audio_file.save(path_save)
+            print(path_save)
 
             # Get feature data of audio sample
             feature_data = get_feature_data(file_path=path_save)

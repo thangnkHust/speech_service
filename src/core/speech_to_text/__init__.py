@@ -1,0 +1,1 @@
+from .main import speech_to_text

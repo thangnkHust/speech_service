@@ -4,5 +4,6 @@
 .env
 .idea
 **/.DS_Store
-src/utils/speaker_identification/models
-src/utils/speech_to_text/pretrain915_finetune2
+src/core/speaker_identification/models
+src/core/speaker_diarization/speaker_diarization
+src/core/speech_to_text/pretrain915_finetune2

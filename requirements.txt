@@ -18,7 +18,7 @@ torch==1.11.0
 torchvision
 torchaudio
 transformers==4.20.1
-# Tensorflow==2.8.2
+Tensorflow==2.8.2
 # numpy
 # scipy
 # pandas
@@ -28,3 +28,4 @@ transformers==4.20.1
 # Queue
 celery[redis]
 flower==1.0.0
+watchdog

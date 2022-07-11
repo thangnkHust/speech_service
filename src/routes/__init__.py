@@ -2,7 +2,8 @@ from src.controllers.auth_controller import LoginResource, RegisterResource
 from src.controllers.admin import UserListResource, UserResource, UserActiveResource, AdminSpeakerListResource, \
     AdminSpeakerResource, AdminAudioSampleListResource, AdminAudioSampleResource, AdminRecordListResource, AdminRecordResource
 from src.controllers.user import ProfileResource, SpeakerListResource, SpeakerResource, \
-    AudioListResource, SpeakerIdentificationResource, RecordListResource, RecordProcessingResource, RecordTranscriptResource
+    AudioListResource, SpeakerIdentificationResource, RecordListResource, RecordProcessingResource, RecordTranscriptResource, \
+    TestResource
 
 def initialize_routes(api):
     """Initial router
@@ -34,3 +35,4 @@ def initialize_routes(api):
     api.add_resource(RecordListResource, '/api/records')
     api.add_resource(RecordProcessingResource, '/api/speech-recognition')
     api.add_resource(RecordTranscriptResource, '/api/full-transcript')
+    api.add_resource(TestResource, '/api/test')

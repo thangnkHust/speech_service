@@ -17,7 +17,7 @@ class SpeakerListResource(BaseResource):
     def post(self, user_data):
         speaker_service = SpeakerService()
         parser = reqparse.RequestParser(trim=True)
-        parser.add_argument('name', type=str, required=True, case_sensitive=False)
+        parser.add_argument('name', type=str, required=True, case_sensitive=False, location=['form', 'json'])
         args = parser.parse_args()
 
         return speaker_service.create_speaker(user_id=user_data['user_id'], name=args['name'])
