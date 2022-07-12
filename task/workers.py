@@ -53,6 +53,7 @@ def speech_recognition(record_path: str, user_id: int, record_id: str):
         }
     except Exception as e:
         record_dao_worker.update_record(record_id=record_id, user_id=user_id, status=FAILURE, result_path=None)
+        print(e)
         os.remove(result_path)
         raise e
 

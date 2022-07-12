@@ -58,7 +58,11 @@ def get_fft_spectrum(filename, buckets):
 	fft_norm = normalize_frames(fft.T)
 
 	# truncate to max bucket sizes
-	rsize = max(k for k in buckets if k <= fft_norm.shape[1])
+	print(buckets)
+	print(fft_norm.shape[1])
+
+	rsize = max([k for k in buckets if k <= fft_norm.shape[1]], default=1000)
+	print(f'debug_resize{rsize}')
 	rstart = int((fft_norm.shape[1]-rsize)/2)
 	out = fft_norm[:,rstart:rstart+rsize]
 
