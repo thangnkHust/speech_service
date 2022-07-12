@@ -15,6 +15,7 @@ timezone = "Asia/Ho_Chi_Minh"
 
 # worker_concurrency = 6
 # worker_pool = "eventlet"
+# worker_pool = "threads"
 # Worker có thể restart pool
 worker_pool_restarts = True
 # Khi xảy ra lỗi (như worker break) thì message sẽ được lưu trữ lại trong message queue

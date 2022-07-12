@@ -13,6 +13,9 @@ from src.routes import initialize_routes
 from src.swagger import template, swagger_config
 from app_celery import celery
 from task.celery_utils import init_celery
+from src.core.speaker_identification import SpeakerIdentificationModel
+from src.core.speaker_diarization import SpeakerDiarizationModel
+from src.core.speech_to_text import SpeechToTextModel
 
 def create_app(flask_env=FLASK_ENV):
     app = Flask(__name__)
@@ -39,6 +42,11 @@ def create_app(flask_env=FLASK_ENV):
     # Init router
     api = Api(app)
     initialize_routes(api)
+
+    # Init model AI
+    SpeakerIdentificationModel()
+    SpeakerDiarizationModel()
+    SpeechToTextModel()
 
     return app
 

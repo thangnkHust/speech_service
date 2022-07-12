@@ -7,8 +7,16 @@ from keras.layers.convolutional import Conv2D, ZeroPadding2D, MaxPooling2D, Aver
 from tensorflow.keras.layers import BatchNormalization
 from keras.layers.core import Lambda, Activation
 from keras.models import Model
-
+import tensorflow as tf
+import os
 from . import constants as c
+
+gpus = tf.config.experimental.list_physical_devices("GPU")
+for gpu in gpus:
+	tf.config.experimental.set_memory_growth(gpu, True)
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+
 
 
 # Block of layers: Conv --> BatchNorm --> ReLU --> Pool

@@ -2,7 +2,7 @@ import os
 from flask import current_app, jsonify, send_file
 from nanoid import generate
 from src.daos import UserDAO, SpeakerDAO, AudioSampleDAO
-from src.core.speaker_identification import get_feature_data, get_speaker_result
+from src.core.speaker_identification import SpeakerIdentificationModel
 
 class SpeakerService:
     def __init__(self) -> None:
@@ -94,10 +94,9 @@ class SpeakerService:
             path_save = os.path.join(folder_path, filename_random)
             # save file to server
             audio_file.save(path_save)
-            print(path_save)
 
             # Get feature data of audio sample
-            feature_data = get_feature_data(file_path=path_save)
+            feature_data = SpeakerIdentificationModel.get_feature_data(file_path=path_save)
             # save to database
             self.audio_sample_dao.create_audio_sample(name=audio_file.filename, path=path_save, speaker=speaker, feature_data=feature_data.tobytes())
 
@@ -123,10 +122,10 @@ class SpeakerService:
                 enroll_list.append(data)
 
         # Get feature data of audio test
-        feature_test = get_feature_data(audio_test)
+        feature_test = SpeakerIdentificationModel.get_feature_data(audio_test)
 
         # get speaker
-        correct_speaker, confidence = get_speaker_result(enroll_list, feature_test)
+        correct_speaker, confidence = SpeakerIdentificationModel.get_speaker_result(enroll_list, feature_test)
         if not correct_speaker:
             response = jsonify({
                 'message': 'Internal error!!!'
@@ -208,7 +207,7 @@ class SpeakerService:
             audio_file.save(path_save)
 
             # Get feature data of audio sample
-            feature_data = get_feature_data(file_path=path_save)
+            feature_data = SpeakerIdentificationModel.get_feature_data(file_path=path_save)
             # save to database
             self.audio_sample_dao.create_audio_sample(name=audio_file.filename, path=path_save, speaker=speaker, feature_data=feature_data.tobytes())
 

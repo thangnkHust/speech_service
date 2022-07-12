@@ -29,3 +29,4 @@ Tensorflow==2.8.2
 celery[redis]
 flower==1.0.0
 watchdog
+gevent

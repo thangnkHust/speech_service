@@ -1,1 +1,1 @@
-from .main import speaker_diarization, speaker_identification
+from .main import SpeakerDiarizationModel

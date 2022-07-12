@@ -4,14 +4,15 @@ from flask_restful import Resource
 import werkzeug
 import math
 import time
+from pyannote.core import Segment
 # from flasgger import swag_from
 
 from ..common.base_controller import BaseResource
 from src.services import RecordService
 from src.utils.check_connection import *
-from src.core.speech_to_text import speech_to_text
-from src.core.speaker_diarization import speaker_diarization, speaker_identification
-from src.core.speaker_identification import get_speaker_result, get_feature_data
+from src.core.speaker_diarization import SpeakerDiarizationModel
+from src.core.speaker_identification import SpeakerIdentificationModel
+from src.core.speech_to_text import SpeechToTextModel
 from src.utils.waveform import audio_load
 from src.utils.constants import TIME_PER_SPLIT, DEVICE
 
@@ -84,16 +85,6 @@ class TestResource(BaseResource):
                     'audio_data': audio.feature_data
                 }
                 enroll_list.append(data)
-
-        from pyannote.core import Segment
-        excerpt = Segment(start=0, end=3)
-        waveform, sr = audio_load.crop(input_file, excerpt)
-        feature_test = get_feature_data(waveform.squeeze().numpy())
-
-        correct_speaker, confidence = get_speaker_result(enroll_list, feature_test)
-        return correct_speaker.serialize()
-
-    
         result_temp = []
         for i in range(temp):
             start_time = i*TIME_PER_SPLIT
@@ -101,10 +92,13 @@ class TestResource(BaseResource):
                 end_time = duration
             else:
                 end_time = (i+1)*TIME_PER_SPLIT
-            result_diarization = speaker_diarization(input_file, start_time, end_time)
+            result_diarization = SpeakerDiarizationModel.speaker_diarization(input_file, start_time, end_time)
         
             for spk in result_diarization:
-                spk['speaker'] = speaker_identification(input_file, spk['segment']['start'], spk['segment']['end'], spk['speaker'])
+                excerpt = Segment(start=spk['segment']['start'], end=spk['segment']['end'])
+                waveform, _ = audio_load.crop(input_file, excerpt)
+                spk['speaker'] =  SpeakerIdentificationModel.speaker_identification(enroll_list, waveform.squeeze().numpy())
+
             result_temp.append(result_diarization)
 
         result = [result_temp[0][0]]
@@ -119,7 +113,7 @@ class TestResource(BaseResource):
                     result.append(result_temp[i][j])
 
         for item in result:
-            item['transcript'], item['reliability_transcript'], item['transcript_info'] = speech_to_text(input_file, item['segment']['start'], item['segment']['end'])
+            item['transcript'], item['reliability_transcript'], item['transcript_info'] = SpeechToTextModel.speech_to_text(input_file, item['segment']['start'], item['segment']['end'])
         end = time.time()
         handle_time = end - start
 

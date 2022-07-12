@@ -46,8 +46,8 @@ services:
     restart: unless-stopped
     env_file:
       - .env
-    # command: watchmedo auto-restart --directory=./ --pattern="*.py" --recursive -- celery -A task.run_celery:celery worker --loglevel INFO --autoscale 10,1
-    command: celery -A task.run_celery:celery worker --loglevel INFO --autoscale 10,1
+    command: watchmedo auto-restart --directory=./ --pattern="*.py" --recursive -- celery -A task.run_celery:celery worker --pool gevent --loglevel INFO --autoscale 10,1
+    # command: celery -A task.run_celery:celery worker --loglevel INFO --autoscale 10,1
     links:
       - rabbitmq
       - redis
@@ -76,19 +76,21 @@ services:
     volumes:
       - .docker/data/db:/var/lib/postgresql/data
 
-  flower:
-    image: asr:1.0
-    volumes:
-      - ./:/app
-    restart: unless-stopped
-    env_file:
-      - .env
-    command: celery -A task.run_celery:celery flower --loglevel INFO --port=${FLOWER_PORT} --basic_auth=${AUTH_USERNAME}:${AUTH_PASSWORD} --persistent=True --broker_api=${BROKER_API} --db=.docker/data/flower/flower
-    ports:
-      - ${FLOWER_PORT}:${FLOWER_PORT}
-    links:
-      - rabbitmq
-      - redis
-    depends_on:
-      - rabbitmq
-      - worker
+  # flower:
+  #   image: asr:1.0
+  #   volumes:
+  #     - ./:/app
+  #   restart: unless-stopped
+  #   env_file:
+  #     - .env
+  #   command: celery -A task.run_celery:celery flower --loglevel INFO --port=${FLOWER_PORT} --basic_auth=${AUTH_USERNAME}:${AUTH_PASSWORD} --persistent=True --broker_api=${BROKER_API} --db=.docker/data/flower/flower
+  #   ports:
+  #     - ${FLOWER_PORT}:${FLOWER_PORT}
+  #   links:
+  #     - rabbitmq
+  #     - redis
+  #   depends_on:
+  #     - rabbitmq
+  #     - worker
+  #     - app
+  #     - webserver
