@@ -105,6 +105,7 @@ def handle_speech_recognition(user_id, input_file):
                 result.append(result_temp[i][j])
 
     for item in result:
+        print(item)
         item['transcript'], item['reliability_transcript'], item['transcript_info'] = SpeechToTextModel.speech_to_text(input_file, item['segment']['start'], item['segment']['end'])
 
     end = time.time()

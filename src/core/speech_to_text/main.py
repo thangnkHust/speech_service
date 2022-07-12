@@ -140,7 +140,10 @@ class SpeechToTextModel:
                 i2 = i1
             else:
                 i2 += 1
-        score_segment = round(sum(seg.score * seg.length for seg in words_default) / sum(seg.length for seg in words_default), 4)
+        if sum(seg.length for seg in words_default) != 0:
+            score_segment = round(sum(seg.score * seg.length for seg in words_default) / sum(seg.length for seg in words_default), 4)
+        else:
+            score_segment = 0
         return words, score_segment
 
     @staticmethod
