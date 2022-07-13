@@ -14,7 +14,6 @@ result_serializer = 'json'
 timezone = "Asia/Ho_Chi_Minh"
 
 # worker_concurrency = 6
-# worker_pool = "eventlet"
 # worker_pool = "threads"
 # Worker có thể restart pool
 worker_pool_restarts = True
@@ -22,3 +21,21 @@ worker_pool_restarts = True
 task_acks_late = True
 # khi message được chạy lại thì status sẽ update thành STARTED
 task_track_started = True
+
+# BROKER_HEARTBEAT = 10
+# BROKER_HEARTBEAT_CHECKRATE = 2.0
+broker_heartbeat = None
+# broker_heartbeat_checkrate = 5
+
+# Số lượng kết nối tối đa có thể mở trong pool connection
+# Setting BROKER_POOL_LIMIT to None disables pooling
+# Disabling pooling causes open/close connections for every task.
+# However, the rabbitMQ cluster being behind an Elastic Load Balancer,
+# the pooling is not working correctly,
+# and the connection is lost at some point.
+# There seems no other way around it for the time being.
+broker_pool_limit = None
+# usage for monitoring(flower)
+worker_send_task_events = True
+# Will delete all celeryev. queues without consumers after 1 minute.
+event_queue_expires = 60

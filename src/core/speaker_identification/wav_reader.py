@@ -17,7 +17,7 @@ def load_wav(data, sample_rate):
 	Returns:
 		_type_: numpy array
 	"""
-	if isinstance(data, werkzeug.datastructures.FileStorage):
+	if isinstance(data, werkzeug.datastructures.FileStorage) or isinstance(data, str):
 		audio, sr = librosa.load(data, sr=sample_rate, mono=True)
 	else:
 		audio = data

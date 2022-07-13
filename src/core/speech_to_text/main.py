@@ -24,7 +24,7 @@ class SpeechToTextModel:
                     pad_token_id=__processor.tokenizer.pad_token_id,
                     vocab_size=len(__processor.tokenizer)
                 ).to(device)
-    
+
     @staticmethod
     def __get_trellis(emission, tokens, blank_id=0):
         num_frame = emission.size(0)
@@ -140,7 +140,10 @@ class SpeechToTextModel:
                 i2 = i1
             else:
                 i2 += 1
-        score_segment = round(sum(seg.score * seg.length for seg in words_default) / sum(seg.length for seg in words_default), 4)
+        if sum(seg.length for seg in words_default) != 0:
+            score_segment = round(sum(seg.score * seg.length for seg in words_default) / sum(seg.length for seg in words_default), 4)
+        else:
+            score_segment = 0
         return words, score_segment
 
     @staticmethod
