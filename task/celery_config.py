@@ -22,9 +22,8 @@ task_acks_late = True
 # khi message được chạy lại thì status sẽ update thành STARTED
 task_track_started = True
 
-# BROKER_HEARTBEAT = 10
-# BROKER_HEARTBEAT_CHECKRATE = 2.0
 broker_heartbeat = None
+# broker_heartbeat = 10
 # broker_heartbeat_checkrate = 5
 
 # Số lượng kết nối tối đa có thể mở trong pool connection
