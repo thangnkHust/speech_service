@@ -24,7 +24,7 @@ class SpeechToTextModel:
                     pad_token_id=__processor.tokenizer.pad_token_id,
                     vocab_size=len(__processor.tokenizer)
                 ).to(device)
-    
+
     @staticmethod
     def __get_trellis(emission, tokens, blank_id=0):
         num_frame = emission.size(0)
