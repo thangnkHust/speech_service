@@ -30,3 +30,4 @@ celery[redis]
 flower==1.0.0
 watchdog
 gevent
+eventlet

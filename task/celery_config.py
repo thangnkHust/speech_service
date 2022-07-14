@@ -6,7 +6,7 @@ imports = ('task.workers',)
 
 ## Using the database to store task state and results.
 result_backend = 'redis://redis:6379/0'
-#result_persistent = False
+result_persistent = True
 
 accept_content = ['json', 'application/text']
 
